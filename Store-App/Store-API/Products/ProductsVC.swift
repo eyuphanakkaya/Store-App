@@ -13,9 +13,8 @@ final class ProductsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .systemBackground
         load()
-
     }
     
     init(loader: ProductLoader) {
