@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 final class ProductCollectionViewCell: UICollectionViewCell {
     static let identifier = "ProductCollectionViewCell"
@@ -27,6 +28,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(to product: ProductResponse) {
+        image.sd_setImage(with: URL(string: product.image))
         titleLabel.text = product.title
         priceLabel.text = product.priceFormatted()
     }
