@@ -32,6 +32,16 @@ final class ProductsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.viewWillAppear()
+        
+        viewModel.onSuccess = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        
+        viewModel.onFailure = {  error in
+            print(error)
+        }
     }
     
     // MARK: - Initializer
@@ -78,7 +88,7 @@ private extension ProductsVC {
 // MARK: - UICollectionViewDelegate & UICollectionViewDataSource
 extension ProductsVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return viewModel.products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

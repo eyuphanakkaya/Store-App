@@ -10,6 +10,10 @@ import Foundation
 
 final class ProductsVM {
     private let service: ProductsService
+    var products: [ProductResponse] = []
+    
+    var onSuccess: (() -> Void)?
+    var onFailure: ((Error) -> Void)?
     
     init(service: ProductsService) {
         self.service = service
@@ -20,14 +24,13 @@ final class ProductsVM {
     }
     
     private func load() {
-        service.load { result in
+        service.load { [weak self] result in
             switch result {
             case .success(let response):
-                response.forEach { item in
-                    print(item)
-                }
+                self?.products = response
+                self?.onSuccess?()
             case .failure(let error):
-                print(error)
+                self?.onFailure?(error)
             }
         }
     }
