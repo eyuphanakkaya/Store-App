@@ -67,7 +67,7 @@ final class ProductsVC: UIViewController {
 private extension ProductsVC {
     func setupUI() {
         view.backgroundColor = .white
-        navigationController?.title = "Products"
+        title = "Products"
     }
     
     func setupConstraints() {
