@@ -13,7 +13,7 @@ final class ProductDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Product Detail"
+        title = viewModel.title
         // Do any additional setup after loading the view.
     }
     

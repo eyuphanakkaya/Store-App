@@ -8,10 +8,12 @@
 import Foundation
 
 final class ProductDetailsVM {
+    var title: String
     private let service: ProductDetailService
     
-    init(service: ProductDetailService) {
+    init(service: ProductDetailService, title: String) {
         self.service = service
+        self.title = title
     }
     
     func viewWillAppear() {
@@ -24,6 +26,7 @@ final class ProductDetailsVM {
             case let .success(item):
                 print(item)
             case let .failure(error):
+                print(error)
             }
         }
     }

@@ -9,8 +9,13 @@ import Foundation
 import UIKit
 
 final class ProductDetailFactory {
-    func makeViewController() -> UIViewController {
-        let viewController = ProductDetailVC()
+    func makeViewController(id: Int, title: String) -> UIViewController {
+        let httpClient = URLSessionHTTPClient()
+        let url = URL(string: APIConstants.baseURL + "products/\(id)")!
+        
+        let service = ProductDetailService(httpClient: httpClient, url: url)
+        let viewModel = ProductDetailsVM(service: service, title: title)
+        let viewController = ProductDetailVC(viewModel: viewModel)
         return viewController
     }
 }

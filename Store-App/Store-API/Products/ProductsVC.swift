@@ -70,6 +70,12 @@ final class ProductsVC: UIViewController {
         }
     }
     
+    // MARK: - Helpers
+    private func navigateToProductDetails(productId: Int, productTitle: String) {
+        let viewController = ProductDetailFactory().makeViewController(id: productId, title: productTitle)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
 }
 
 // MARK: - UI Helpers
@@ -100,8 +106,8 @@ extension ProductsVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let viewController = ProductDetailFactory().makeViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        let product = viewModel.products[indexPath.row]
+        navigateToProductDetails(productId: product.id,productTitle: product.title)
     }
 }
 
