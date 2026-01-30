@@ -8,8 +8,9 @@
 import Foundation
 
 final class ProductDetailsVM {
-    var title: String
     private let service: ProductDetailService
+    var title: String
+    var onSuccess: ((ProductResponse) -> Void)?
     
     init(service: ProductDetailService, title: String) {
         self.service = service
@@ -21,10 +22,12 @@ final class ProductDetailsVM {
     }
     
     private func load() {
-        service.load { result in
+        service.load { [weak self] result in
+            guard let self else {return}
+
             switch result {
             case let .success(item):
-                print(item)
+                onSuccess?(item)
             case let .failure(error):
                 print(error)
             }
