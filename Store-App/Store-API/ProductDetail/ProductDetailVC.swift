@@ -12,6 +12,8 @@ final class ProductDetailVC: UIViewController {
     // MARK: - Components
     private let viewModel: ProductDetailsVM
     private let productHeroView = ProductHeroView()
+    private let addActionView = AddActionView()
+    private let stackView = UIStackView()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -47,14 +49,24 @@ private extension ProductDetailVC {
         view.backgroundColor = .white
         title = viewModel.title
         
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        
         setupConstraints()
     }
     
     func setupConstraints() {
-        view.addSubview(productHeroView)
-        productHeroView.snp.makeConstraints { make in
+        view.addSubview(stackView)
+        
+        stackView.addArrangedSubviews(productHeroView, addActionView)
+        
+        stackView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        addActionView.snp.makeConstraints { make in
+            make.height.equalTo(48)
         }
     }
 }
