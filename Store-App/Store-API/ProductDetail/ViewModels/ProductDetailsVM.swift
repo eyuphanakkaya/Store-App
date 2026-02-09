@@ -11,6 +11,7 @@ final class ProductDetailsVM {
     private let service: ProductDetailService
     var title: String
     var onSuccess: ((ProductResponse) -> Void)?
+    var product: ProductResponse?
     
     init(service: ProductDetailService, title: String) {
         self.service = service
@@ -28,6 +29,7 @@ final class ProductDetailsVM {
             switch result {
             case let .success(item):
                 onSuccess?(item)
+                product = item
             case let .failure(error):
                 print(error)
             }

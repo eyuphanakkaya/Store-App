@@ -10,21 +10,22 @@ import SnapKit
 
 final class ProductDetailVC: UIViewController {
     // MARK: - Components
+    private let collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: createLayout())
+    
     private let viewModel: ProductDetailsVM
-    private let productHeroView = ProductHeroView()
-    private let addActionView = AddActionView()
-    private let descriptionView = DescriptionView()
-    private let stackView = UIStackView()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         
+        setupCollectionView()
+        
         viewModel.onSuccess = { [weak self] product in
             DispatchQueue.main.async {
-                self?.productHeroView.configure(with: product)
-                self?.descriptionView.configure(with: product.description)
+                self?.collectionView.reloadData()
             }
         }
     }
@@ -44,31 +45,51 @@ final class ProductDetailVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helper
+    private func setupCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.register(ProductHeroCell.self, forCellWithReuseIdentifier: ProductHeroCell.reuseIdentifier)
+        collectionView.frame = view.bounds
+        collectionView.backgroundColor = .white
+        collectionView.dataSource = self
+    }
+    
+    static func createLayout() -> UICollectionViewCompositionalLayout {
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)),
+            subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
+    
+}
+
+extension ProductDetailVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductHeroCell.reuseIdentifier, for: indexPath) as! ProductHeroCell
+        if let product = viewModel.product {
+            cell.configure(with: product)
+        }
+        return cell
+    }
 }
 
 private extension ProductDetailVC {
     func setupView() {
         view.backgroundColor = .white
         title = viewModel.title
-        
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        
-        setupConstraints()
-    }
-    
-    func setupConstraints() {
-        view.addSubview(stackView)
-        
-        stackView.addArrangedSubviews(productHeroView, addActionView, descriptionView)
-        
-        stackView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        addActionView.snp.makeConstraints { make in
-            make.height.equalTo(48)
-        }
     }
 }
