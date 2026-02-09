@@ -8,31 +8,52 @@
 import Foundation
 
 final class ProductDetailsVM {
-    private let service: ProductDetailService
-    var title: String
-    var onSuccess: ((ProductResponse) -> Void)?
-    var product: ProductResponse?
+    private let detailService: ProductDetailService
+    private let productsService: ProductsService
     
-    init(service: ProductDetailService, title: String) {
-        self.service = service
+    var title: String
+    var productDetails: ProductResponse?
+    var products: [ProductResponse]?
+    
+    var onSuccess: (() -> Void)?
+    
+    init(detailService: ProductDetailService, productsService: ProductsService, title: String) {
+        self.detailService = detailService
+        self.productsService = productsService
         self.title = title
     }
     
     func viewWillAppear() {
-        load()
+        detailLoad()
+        productsLoad()
     }
     
-    private func load() {
-        service.load { [weak self] result in
+    private func detailLoad() {
+        detailService.load { [weak self] result in
             guard let self else {return}
 
             switch result {
             case let .success(item):
-                onSuccess?(item)
-                product = item
+                onSuccess?()
+                productDetails = item
             case let .failure(error):
                 print(error)
             }
         }
     }
+    
+    private func productsLoad() {
+        productsService.load { [weak self] result in
+            guard let self else {return}
+            
+            switch result {
+            case let .success(items):
+                onSuccess?()
+                products = items
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+    
 }

@@ -11,10 +11,12 @@ import UIKit
 final class ProductDetailFactory {
     func makeViewController(id: Int, title: String) -> UIViewController {
         let httpClient = URLSessionHTTPClient()
-        let url = URL(string: APIConstants.baseURL + "products/\(id)")!
+        let detailUrl = URL(string: APIConstants.baseURL + "products/\(id)")!
+        let productsUrl = URL(string: APIConstants.baseURL + "products")!
         
-        let service = ProductDetailService(httpClient: httpClient, url: url)
-        let viewModel = ProductDetailsVM(service: service, title: title)
+        let detailService = ProductDetailService(httpClient: httpClient, url: detailUrl)
+        let productsService = ProductsService(client: httpClient, url: productsUrl)
+        let viewModel = ProductDetailsVM(detailService: detailService, productsService: productsService, title: title)
         let viewController = ProductDetailVC(viewModel: viewModel)
         return viewController
     }
