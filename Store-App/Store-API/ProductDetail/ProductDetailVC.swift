@@ -12,7 +12,7 @@ final class ProductDetailVC: UIViewController {
     // MARK: - Components
     private let collectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: createLayout())
+        collectionViewLayout: LayoutMaker().makeLayout())
     
     private let viewModel: ProductDetailsVM
     
@@ -54,58 +54,6 @@ final class ProductDetailVC: UIViewController {
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
     }
-    
-    static func createLayout() -> UICollectionViewCompositionalLayout {
-        
-        UICollectionViewCompositionalLayout { sectionIndex, environment in
-            switch sectionIndex {
-            case 0:
-                
-                let item = NSCollectionLayoutItem(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1.0),
-                        heightDimension: .fractionalHeight(1.0)
-                    )
-                )
-                
-                let group = NSCollectionLayoutGroup.vertical(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1.0),
-                        heightDimension: .fractionalHeight(1)
-                    ),
-                    subitems: [item]
-                )
-                
-                let section = NSCollectionLayoutSection(group: group)
-                return section
-            case 1:
-                let item = NSCollectionLayoutItem(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(0.5),
-                        heightDimension: .fractionalHeight(1.0)
-                    )
-                )
-                
-                item.contentInsets = NSDirectionalEdgeInsets(
-                    top: 8, leading: 8, bottom: 8, trailing: 8
-                )
-                
-                let group = NSCollectionLayoutGroup.horizontal(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1.0),
-                        heightDimension: .absolute(220)
-                    ),
-                    subitems: [item, item]
-                )
-                
-                let section = NSCollectionLayoutSection(group: group)
-                return section
-            default:
-                return nil
-            }
-        }
-    }
-    
 }
 
 extension ProductDetailVC: UICollectionViewDataSource {
@@ -122,29 +70,18 @@ extension ProductDetailVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView,cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         switch indexPath.section {
         case 0:
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: ProductHeroCell.reuseIdentifier,
-                for: indexPath
-            ) as! ProductHeroCell
+            let cell = collectionView.dequeueCell(cellClass: ProductHeroCell.self, for: indexPath)
             
-            if let product = viewModel.productDetails {
-                cell.configure(with: product)
-            }
+            if let product = viewModel.productDetails { cell.configure(with: product) }
             return cell
             
         case 1:
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: ProductCollectionViewCell.identifier,
-                for: indexPath
-            ) as! ProductCollectionViewCell
-            
+            let cell = collectionView.dequeueCell(cellClass: ProductCollectionViewCell.self, for: indexPath)
             let product = viewModel.products?[indexPath.item]
             cell.configure(to: product)
             return cell
-            
         default:
             return UICollectionViewCell()
         }
