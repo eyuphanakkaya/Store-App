@@ -14,6 +14,8 @@ struct ProductResponse {
     let description: String
     let category: String
     let image: String
+    
+    var isAdded: Bool
 }
 
 extension ProductResponse {
@@ -33,6 +35,6 @@ struct RemoteProductResponse: Decodable {
 }
 extension RemoteProductResponse {
     func toDomain() -> ProductResponse {
-        return ProductResponse(id: id, title: title, price: price, description: description, category: category, image: image)
+        return ProductResponse(id: id, title: title, price: price, description: description, category: category, image: image, isAdded: false)
     }
 }

@@ -17,9 +17,10 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     private let image = UIImageView()
     private let titleLabel = UILabel()
     private let priceLabel = UILabel()
-    private let addActionView = AddActionView()
+    private var addActionView = AddActionView()
     
     var onAddToCartHandler: (() -> Void)?
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,6 +38,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         image.sd_setImage(with: URL(string: product.image))
         titleLabel.text = product.title
         priceLabel.text = product.priceFormatted()
+        addActionView.isButtonSelected = product.isAdded
     }
     
     

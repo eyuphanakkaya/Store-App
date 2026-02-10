@@ -82,7 +82,8 @@ extension ProductDetailVC: UICollectionViewDataSource, UICollectionViewDelegate 
             cell.configure(to: product)
             
             cell.onAddToCartHandler = { [weak self] in
-                print("selam \(indexPath.row)")
+                self?.viewModel.toggleAddToCart(productID: product?.id)
+                self?.collectionView.reloadItems(at: [indexPath])
             }
             return cell
         default:

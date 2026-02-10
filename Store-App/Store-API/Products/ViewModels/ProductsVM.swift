@@ -19,10 +19,12 @@ final class ProductsVM {
         self.service = service
     }
     
-    func viewWillAppear() {
+    func viewDidLoad() {
         load()
     }
-    
+}
+
+extension ProductsVM {
     private func load() {
         Task {
             do {
@@ -33,5 +35,10 @@ final class ProductsVM {
                 onFailure?(error)
             }
         }
+    }
+    
+    func toggleAddToCart(productID: Int) {
+        guard let index = products.firstIndex(where: { $0.id == productID }) else { return }
+        products[index].isAdded.toggle()
     }
 }

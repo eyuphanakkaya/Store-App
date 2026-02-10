@@ -60,3 +60,10 @@ final class ProductDetailsVM {
     }
     
 }
+extension ProductDetailsVM {
+    func toggleAddToCart(productID: Int?) {
+        guard let productID  else {return}
+        guard let index = products?.firstIndex(where: { $0.id == productID }) else { return }
+        products?[index].isAdded.toggle()
+    }
+}

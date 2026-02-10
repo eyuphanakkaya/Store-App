@@ -24,6 +24,8 @@ final class ProductsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.viewDidLoad()
+
         setupCollectionView()
         setupUI()
     }
@@ -31,7 +33,6 @@ final class ProductsVC: UIViewController {
     // MARK: - Lifecycles
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.viewWillAppear()
         
         viewModel.onSuccess = { [weak self] in
             self?.collectionView.reloadData()
@@ -102,7 +103,8 @@ extension ProductsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         
         cell.onAddToCartHandler = { [weak self] in
-            print(product.id)
+            self?.viewModel.toggleAddToCart(productID: product.id)
+            collectionView.reloadItems(at: [indexPath])
         }
         
         return cell
