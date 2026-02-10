@@ -51,10 +51,11 @@ final class ProductDetailVC: UIViewController {
         collectionView.frame = view.bounds
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
+        collectionView.delegate = self
     }
 }
 
-extension ProductDetailVC: UICollectionViewDataSource {
+extension ProductDetailVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         2
     }
@@ -82,6 +83,15 @@ extension ProductDetailVC: UICollectionViewDataSource {
             return cell
         default:
             return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        if indexPath.section == 1, let productItem = viewModel.products?[indexPath.item] {
+            let viewController = ProductDetailFactory().makeViewController(id: productItem.id, title: productItem.title)
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }
