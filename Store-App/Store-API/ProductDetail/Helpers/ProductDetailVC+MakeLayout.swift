@@ -16,23 +16,7 @@ extension ProductDetailVC {
                     let section = NSCollectionLayoutSection.fillWidth(heightDimension: .fractionalHeight(1))
                     return section
                 case 1:
-                    let item = NSCollectionLayoutItem(
-                        layoutSize: NSCollectionLayoutSize(
-                            widthDimension: .fractionalWidth(0.5),
-                            heightDimension: .fractionalHeight(1.0)
-                        )
-                    )
-                    
-                    
-                    let group = NSCollectionLayoutGroup.horizontal(
-                        layoutSize: NSCollectionLayoutSize(
-                            widthDimension: .fractionalWidth(1.0),
-                            heightDimension: .absolute(220)
-                        ),
-                        subitems: [item, item]
-                    )
-                    
-                    let section = NSCollectionLayoutSection(group: group)
+                    let section = NSCollectionLayoutSection.customTwoGrid(height: 220, itemSpacing: 8, sectionInset: 8)
                     return section
                 default:
                     return nil

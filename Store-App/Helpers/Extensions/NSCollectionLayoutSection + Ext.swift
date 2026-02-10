@@ -22,9 +22,43 @@ extension NSCollectionLayoutSection {
         return NSCollectionLayoutSection(group: group)
     }
     
-    static func custom(widthDimension: NSCollectionLayoutDimension, heightDimension: NSCollectionLayoutDimension, subtItems: [NSCollectionLayoutItem]) -> (NSCollectionLayoutSize,NSCollectionLayoutSection) {
-        let size = NSCollectionLayoutSize(widthDimension: widthDimension, heightDimension: heightDimension)
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: subtItems)
-        return  (size,NSCollectionLayoutSection(group: group))
-    }
+    static func customTwoGrid(
+           height: CGFloat,
+           itemSpacing: CGFloat,
+           sectionInset: CGFloat
+       ) -> NSCollectionLayoutSection {
+
+           let itemSize = NSCollectionLayoutSize(
+               widthDimension: .fractionalWidth(0.5),
+               heightDimension: .fractionalHeight(1.0)
+           )
+
+           let item = NSCollectionLayoutItem(layoutSize: itemSize)
+           item.contentInsets = NSDirectionalEdgeInsets(
+               top: 8,
+               leading: itemSpacing,
+               bottom: 8,
+               trailing: itemSpacing
+           )
+
+           let groupSize = NSCollectionLayoutSize(
+               widthDimension: .fractionalWidth(1.0),
+               heightDimension: .absolute(height)
+           )
+
+           let group = NSCollectionLayoutGroup.horizontal(
+               layoutSize: groupSize,
+               subitems: [item, item]
+           )
+
+           let section = NSCollectionLayoutSection(group: group)
+           section.contentInsets = NSDirectionalEdgeInsets(
+               top: sectionInset,
+               leading: sectionInset,
+               bottom: sectionInset,
+               trailing: sectionInset
+           )
+
+           return section
+       }
 }
