@@ -10,13 +10,15 @@ import Foundation
 @MainActor
 final class ProductsVM {
     private let service: ProductsService
+    private let storage: StoreStorage
     var products: [ProductResponse] = []
     
     var onSuccess: (() -> Void)?
     var onFailure: ((Error) -> Void)?
     
-    init(service: ProductsService) {
+    init(service: ProductsService, storage: StoreStorage) {
         self.service = service
+        self.storage = storage
     }
     
     func viewDidLoad() {

@@ -15,7 +15,8 @@ final class ProductFactory {
         let url = URL(string: urlString)!
         
         let service = ProductsService(client: client, url: url)
-        let viewModel = ProductsVM(service: service)
+        let storage = UserDefaultManager()
+        let viewModel = ProductsVM(service: service, storage: storage)
         let vc = ProductsVC(viewModel: viewModel)
         return vc
     }
