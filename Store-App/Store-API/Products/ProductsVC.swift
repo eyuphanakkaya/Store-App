@@ -103,7 +103,7 @@ extension ProductsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         
         cell.onAddToCartHandler = { [weak self] in
-            self?.viewModel.toggleAddToCart(productID: product.id)
+            self?.viewModel.toggleAddToCart(productID: product.convertToIdString)
             collectionView.reloadItems(at: [indexPath])
         }
         
