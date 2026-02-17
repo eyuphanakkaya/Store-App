@@ -11,7 +11,7 @@ import UIKit
 final class ProductFactory {
     func makeViewController() -> UIViewController {
         let client = URLSessionHTTPClient()
-        let urlString = APIConstants.baseURL + "products"
+        let urlString = APIConstants.baseURL + "category/jewelery"
         let url = URL(string: urlString)!
         
         let service = ProductsService(client: client, url: url)
