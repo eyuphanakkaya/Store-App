@@ -51,8 +51,9 @@ final class CategoriesVC: UIViewController {
     }
     
     // MARK: - Navigator
-    private func showToProductVC() {
-        let vc = ProductFactory().makeViewController()
+    private func showToProductVC(_ indexPath: IndexPath) {
+        let category = viewModel.categories[indexPath.row]
+        let vc = ProductFactory().makeViewController(category)
         navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -71,6 +72,6 @@ extension CategoriesVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        showToProductVC()
+        showToProductVC(indexPath)
     }
 }

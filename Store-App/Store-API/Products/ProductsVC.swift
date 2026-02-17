@@ -21,6 +21,7 @@ final class ProductsVC: UIViewController {
     }()
     
     private let viewModel: ProductsVM!
+    private let headerTitle: String
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +46,9 @@ final class ProductsVC: UIViewController {
     }
     
     // MARK: - Initializer
-    init(viewModel: ProductsVM) {
+    init(viewModel: ProductsVM,headerTitle: String) {
         self.viewModel = viewModel
+        self.headerTitle = headerTitle
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -83,7 +85,7 @@ final class ProductsVC: UIViewController {
 private extension ProductsVC {
     func setupUI() {
         view.backgroundColor = .white
-        title = "Products"
+        title = headerTitle
     }
     
     func setupConstraints() {
