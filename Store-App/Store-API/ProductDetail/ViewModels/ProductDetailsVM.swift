@@ -48,6 +48,7 @@ final class ProductDetailsVM {
             do {
                 let result = try await detailService.load()
                 productDetails = result
+                syncCartState()
             } catch {
                 print(error)
             }
@@ -109,6 +110,10 @@ extension ProductDetailsVM {
         for index in products!.indices {
             let id = products![index].convertToIdString
             products![index].isAdded = cartIDs.contains(id)
+        }
+        
+        if let detailID = productDetails?.convertToIdString {
+            productDetails?.isAdded = cartIDs.contains(detailID)
         }
     }
 }
