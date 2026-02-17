@@ -24,7 +24,6 @@ final class ProductsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.viewDidLoad()
 
         setupCollectionView()
         setupUI()
@@ -33,6 +32,8 @@ final class ProductsVC: UIViewController {
     // MARK: - Lifecycles
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.viewViewWillAppear()
+
         
         viewModel.onSuccess = { [weak self] in
             self?.collectionView.reloadData()
