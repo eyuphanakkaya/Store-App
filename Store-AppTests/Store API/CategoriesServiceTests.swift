@@ -78,6 +78,21 @@ final class CategoriesServiceTests: XCTestCase {
         }
     }
     
+    func test_load_deliversItemsOn200HTTPResponseWithJsonItems() async throws {
+        let item1 = makeCategory("electronics")
+        let item2 = makeCategory("jewelery")
+        let validJson = makeItemJson([item1.json, item2.json])
+        let on200Response = (validJson, anyHttpResponse(statusCode: 200))
+        let (sut, _) = makeSUT(result: .success(on200Response))
+        
+        do {
+            let result = try await sut.load()
+            XCTAssertEqual(result, [item1.model,item2.model])
+        } catch {
+            XCTFail("Expected empty but got: \(error)")
+        }
+    }
+    
     // MARK: - Helpers
     private func makeSUT(result: Result<(Data, HTTPURLResponse), Error>,url: URL = URL(string: "https://example.com")!) -> (CategoryService, HTTPClientSpy) {
         let client = HTTPClientSpy(result: result)
@@ -107,7 +122,7 @@ final class CategoriesServiceTests: XCTestCase {
     private func expect(_ sut: CategoryService,toCompleteWithError errors: CategoryService.CategoryServiceError, file: StaticString = #file, line: UInt = #line) async {
         do {
             _ = try await sut.load()
-            XCTFail("Expected error: \(errors)")
+            XCTFail("Expected error: \(errors)",file: file, line: line)
         } catch {
             XCTAssertEqual(error as? CategoryService.CategoryServiceError, errors, file: file, line: line)
         }
@@ -117,6 +132,10 @@ final class CategoriesServiceTests: XCTestCase {
     
     private func anyError() -> Error {
         AnyError()
+    }
+    
+    private func makeCategory(_ name: String) -> (model: String, json: String) {
+        return (name, name)
     }
     
     private func emptyListResponse() -> (Data, HTTPURLResponse) {
@@ -131,6 +150,10 @@ final class CategoriesServiceTests: XCTestCase {
     private func anyHttpResponse(statusCode: Int) -> HTTPURLResponse {
         let url = URL(string: "https://example.com")!
         return HTTPURLResponse(url:  url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+    }
+    
+    private func makeItemJson(_ items: [String]) -> Data {
+        try! JSONSerialization.data(withJSONObject: items)
     }
     
 
