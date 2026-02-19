@@ -31,7 +31,7 @@ final public class CategoryService {
     
     private func map(_ data: Data, from response: HTTPURLResponse) throws -> [String] {
         do {
-            let item = try  CategoryMapper().map(data: data, from: response)
+            let item = try  CategoryMapper.map(data: data, from: response)
             return item
         } catch {
             throw CategoryServiceError.invalidData
