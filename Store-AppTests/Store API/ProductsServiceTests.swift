@@ -10,16 +10,14 @@ import Store_App
 
 final class ProductsServiceTests: XCTestCase {
     
-    func test_init_doesNotRequestDataFromURL() {
-        let client = HTTPClientSpy(result: .success(anyValidResponse()))
+    func test_init_doesNotRequestDataFromURL() async {
+        let (_, client) = makeSUT(.success(anyValidResponse()))
         
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
     func test_load_requestsDataFromURL() async throws {
-        let url = URL(string: "https://example.com")!
-        let client = HTTPClientSpy(result: .success(emptyListResponse()))
-        let sut = await ProductsService(client: client,url: url)
+        let (sut, client) = makeSUT(.success(emptyListResponse()))
         
         _ = try await sut.load()
         
@@ -28,6 +26,13 @@ final class ProductsServiceTests: XCTestCase {
     
     
     // MARK: - Helpers
+    
+    private func makeSUT(_ result: Result<(Data, HTTPURLResponse), Error>, url: URL = URL(string: "https://example.com")!, file: StaticString = #file, line: UInt = #line) -> (ProductsService, HTTPClientSpy) {
+        let client = HTTPClientSpy(result: result)
+        let sut = ProductsService(client: client, url: url)
+        
+        return (sut, client)
+    }
     
     private class HTTPClientSpy: HTTPClient {
         var requestedURLs = [URL]()
