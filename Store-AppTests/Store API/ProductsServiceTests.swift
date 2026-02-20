@@ -16,6 +16,16 @@ final class ProductsServiceTests: XCTestCase {
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
+    func test_load_requestsDataFromURL() async throws {
+        let url = URL(string: "https://example.com")!
+        let client = HTTPClientSpy(result: .success(emptyListResponse()))
+        let sut = await ProductsService(client: client,url: url)
+        
+        _ = try await sut.load()
+        
+        XCTAssertNotNil(client.requestedURLs)
+    }
+    
     
     // MARK: - Helpers
     
@@ -33,10 +43,20 @@ final class ProductsServiceTests: XCTestCase {
         }
     }
     
+    private func emptyListResponse() -> (Data, HTTPURLResponse) {
+        let emptyListJSON = "[]".data(using: .utf8)!
+        return (emptyListJSON, anyHttpResponse(statusCode: 200))
+    }
+    
     private func anyValidResponse() -> (Data, HTTPURLResponse) {
         let data = Data()
         let response = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
         return (data, response)
+    }
+    
+    private func anyHttpResponse(statusCode: Int) -> HTTPURLResponse {
+        let url = URL(string: "https://example.com")!
+        return HTTPURLResponse(url:  url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
     }
     
 }

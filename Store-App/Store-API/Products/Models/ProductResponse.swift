@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductResponse {
+public struct ProductResponse {
     let id: Int
     let title: String
     let price: Double
