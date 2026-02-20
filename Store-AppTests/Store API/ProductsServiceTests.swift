@@ -11,9 +11,7 @@ import Store_App
 final class ProductsServiceTests: XCTestCase {
     
     func test_init_doesNotRequestDataFromURL() {
-        let data = Data()
-        let response = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-        let client = HTTPClientSpy(result: .success((data, response)))
+        let client = HTTPClientSpy(result: .success(anyValidResponse()))
         
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
@@ -33,6 +31,12 @@ final class ProductsServiceTests: XCTestCase {
             requestedURLs.append(url)
             return try result.get()
         }
+    }
+    
+    private func anyValidResponse() -> (Data, HTTPURLResponse) {
+        let data = Data()
+        let response = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+        return (data, response)
     }
     
 }
