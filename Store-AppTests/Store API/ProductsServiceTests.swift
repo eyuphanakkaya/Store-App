@@ -34,6 +34,18 @@ final class ProductsServiceTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
+    func test_load_deliversErrorOnClientError() async {
+        let error = NSError(domain: "Test", code: 0)
+        let (sut, _) = makeSUT(.failure(error))
+        
+        do {
+            _ = try await sut.load()
+            XCTFail("Expected error: \(error)")
+        } catch {
+            XCTAssertEqual(error as? ProductsService.ProductsServiceError, .connectivity)
+        }
+    }
+    
     
     // MARK: - Helpers
     
