@@ -23,10 +23,12 @@ final public class ProductsService {
     }
     
     
-    func load() async throws -> [ProductResponse]  {
-        let (data, response) = try await client.get(url)
-        let result = try map(data, from: response)
-        return result
+    public func load() async throws -> [ProductResponse]  {
+        guard let (data, response) = try? await client.get(url) else {
+            throw ProductsServiceError.connectivity
+        }
+        
+        return try map(data, from: response)
     }
     
     private func map(_ data: Data, from response: HTTPURLResponse) throws -> [ProductResponse] {
