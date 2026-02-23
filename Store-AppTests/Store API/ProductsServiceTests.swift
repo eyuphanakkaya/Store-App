@@ -75,6 +75,17 @@ final class ProductsServiceTests: XCTestCase {
         }
     }
     
+    func test_load_deliversOn200HTTPEmptyResponse() async {
+        let (sut, _) = makeSUT(.success(emptyListResponse()))
+        
+        do {
+            let result = try await sut.load()
+            XCTAssertTrue(result.isEmpty)
+        } catch {
+            XCTFail("Expected result instead of \(error)")
+        }
+    }
+    
     
     // MARK: - Helpers
     
