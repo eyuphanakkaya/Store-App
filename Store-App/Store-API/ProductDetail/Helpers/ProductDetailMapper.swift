@@ -9,10 +9,12 @@ import Foundation
 
 final class ProductDetailMapper {
     func map(data: Data, from response: HTTPURLResponse) throws -> ProductResponse {
-        guard response.statusCode == 200, let result = try? JSONDecoder().decode(RemoteProductResponse.self, from: data)  else {
+        guard response.statusCode == 200  else {
             throw ProductDetailService.ProductDetailError.invalidData
         }
 
-        return result.toDomain()
+        let decoder = JSONDecoder()
+        let productDetailResponse = try decoder.decode(RemoteProductResponse.self, from: data)
+        return productDetailResponse.toDomain()
     }
 }
