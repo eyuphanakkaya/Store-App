@@ -71,6 +71,21 @@ final class ProductsServiceTests: XCTestCase {
         }
     }
     
+    func test_load_deliversItemsOn200HTTPResponseWithJsonItems() async {
+        let product1 = makeProduct(1, title: "string", price: 100, description: "string", category: "string", image: "http://example.com")
+        let product2 = makeProduct(2, title: "string", price: 100, description: "string", category: "string", image: "http://example.com")
+        let validJson = makeProductsJson([product1.json, product2.json])
+        let on200Response = (validJson, anyHttpResponse(statusCode: 200))
+        let (sut, _) = makeSUT(.success(on200Response))
+        
+        do {
+            let result = try await sut.load()
+            XCTAssertEqual(result, [product1.model, product2.model])
+        } catch {
+            XCTFail("expected result, got \(error)")
+        }
+    }
+    
     
     // MARK: - Helpers
     
@@ -104,6 +119,27 @@ final class ProductsServiceTests: XCTestCase {
         } catch {
             XCTAssertEqual(error as? ProductsService.ProductsServiceError, errors, file: file, line: line)
         }
+    }
+    
+    private func makeProduct(_ id: Int, title: String, price: Double, description: String, category: String, image: String)
+    -> (model: ProductResponse, json: [String: Any]) {
+        let item = ProductResponse(id: id, title: title, price: price, description: description, category: category, image: image, isAdded: false)
+        
+        let jsonItem = [
+            "id": id,
+            "title": title,
+            "price": price,
+            "description": description,
+            "category": category,
+            "image": image
+        ].compactMapValues{$0}
+        
+        
+        return (item, jsonItem)
+    }
+    
+    private func makeProductsJson(_ products: [[String: Any]]) -> Data {
+        return try! JSONSerialization.data(withJSONObject: products)
     }
     
     private func emptyListResponse() -> (Data, HTTPURLResponse) {
