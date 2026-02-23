@@ -7,7 +7,7 @@
 
 import Foundation
 
-final public class CategoryService {
+final public class CategoryService: StoreLoader {
     private let client: HTTPClient
     private let url: URL
     

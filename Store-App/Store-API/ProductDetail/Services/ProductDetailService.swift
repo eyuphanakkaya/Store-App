@@ -8,7 +8,7 @@
 import Foundation
 
 
-final class ProductDetailService {
+final class ProductDetailService: StoreLoader {
     private let httpClient: HTTPClient
     private let url: URL
     
