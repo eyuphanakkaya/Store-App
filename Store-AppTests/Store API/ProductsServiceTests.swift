@@ -98,20 +98,6 @@ final class ProductsServiceTests: XCTestCase {
         return (sut, client)
     }
     
-    private class HTTPClientSpy: HTTPClient {
-        var requestedURLs = [URL]()
-        private let result: Result<(Data, HTTPURLResponse), Error>
-        
-        init(result: Result<(Data, HTTPURLResponse), Error>) {
-            self.result = result
-        }
-        
-        func get(_ url: URL) async throws -> (Data, HTTPURLResponse) {
-            requestedURLs.append(url)
-            return try result.get()
-        }
-    }
-    
     private func expect(sut: ProductsService, toCompleteWithError errors: ProductsService.ProductsServiceError, file: StaticString = #file, line: UInt = #line) async {
         do {
             let result = try await sut.load()

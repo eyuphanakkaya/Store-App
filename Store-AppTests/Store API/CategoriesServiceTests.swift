@@ -101,24 +101,6 @@ final class CategoriesServiceTests: XCTestCase {
         return (sut,client)
     }
     
-    private class HTTPClientSpy: HTTPClient {
-        private var messages = [URL]()
-        private let result: Result<(Data, HTTPURLResponse), Error>
-        
-        var requestedURLs: [URL] {
-            messages
-        }
-        
-        init(result: Result<(Data, HTTPURLResponse), Error>) {
-            self.result = result
-        }
-        
-        func get(_ url: URL) async throws -> (Data, HTTPURLResponse) {
-            messages.append(url)
-            return try result.get()
-        }
-    }
-    
     private func expect(_ sut: CategoryService,toCompleteWithError errors: CategoryService.CategoryServiceError, file: StaticString = #file, line: UInt = #line) async {
         do {
             _ = try await sut.load()
