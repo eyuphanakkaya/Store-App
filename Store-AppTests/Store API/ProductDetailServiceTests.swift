@@ -66,6 +66,18 @@ final class ProductDetailServiceTests: XCTestCase {
         }
     }
     
+    func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() async {
+        let data = Data("invalid".utf8)
+        let (sut, _) = makeSUT(result: .success((data, anyHttpResponse(statusCode: 200))))
+        
+        do {
+            let result = try await sut.load()
+            XCTFail("Expected error, got \(result)")
+        } catch {
+            XCTAssertEqual(error as? ProductDetailService.ProductDetailError, .invalidData)
+        }
+    }
+    
     
     // MARK: - Helpers
     
