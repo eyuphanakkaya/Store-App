@@ -37,6 +37,20 @@ final class ProductDetailServiceTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
+    func test_load_deliverErrorOnClientError() async {
+        let error = NSError(domain: "Test", code: 0)
+        let (sut, _) = makeSUT(result: .failure(error))
+        
+        do {
+            let result = try await sut.load()
+            XCTFail("Expected error , got \(result)")
+        } catch {
+            XCTAssertEqual(error as? ProductDetailService.ProductDetailError, .connectivity)
+        }
+    }
+    
+    
+    
     // MARK: - Helpers
     
     private func makeSUT(result: Result<(Data, HTTPURLResponse), Error>, url: URL = .init(string: "https://example.com")!) -> (ProductDetailService, HTTPClientSpy) {
