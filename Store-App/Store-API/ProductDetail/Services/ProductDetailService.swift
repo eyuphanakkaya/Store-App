@@ -18,17 +18,15 @@ final public class ProductDetailService: StoreLoader {
     }
     
     public enum ProductDetailError: Error {
+        case connectivity
         case invalidData
     }
     
     public func load() async throws -> ProductResponse{
-        do {
-            let (data,response) = try await client.get(url)
-            let item = try map(data, response)
-            return item
-        } catch {
-            throw ProductDetailError.invalidData
+        guard let (data,response) = try? await client.get(url) else {
+            throw ProductDetailError.connectivity
         }
+        return try map(data, response)
     }
     
     private func map(_ data: Data,_ response: HTTPURLResponse) throws -> ProductResponse {
