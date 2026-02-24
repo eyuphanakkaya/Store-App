@@ -14,7 +14,7 @@ final class ProductDetailFactory {
         let detailUrl = URL(string: APIConstants.baseURL + "\(id)")!
         let productsUrl = URL(string: APIConstants.baseURL)!
         
-        let detailService = ProductDetailService(httpClient: httpClient, url: detailUrl)
+        let detailService = ProductDetailService(client: httpClient, url: detailUrl)
         let productsService = ProductsService(client: httpClient, url: productsUrl)
         let storage = UserDefaultManager()
         

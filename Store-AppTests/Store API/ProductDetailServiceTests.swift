@@ -20,9 +20,9 @@ final class ProductDetailServiceTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(result: Result<(Data, HTTPURLResponse), Error>, url: URL = .init(string: "https://example.com")!) -> (ProductsService, HTTPClientSpy) {
+    private func makeSUT(result: Result<(Data, HTTPURLResponse), Error>, url: URL = .init(string: "https://example.com")!) -> (ProductDetailService, HTTPClientSpy) {
         let client = HTTPClientSpy(result: result)
-        let sut = ProductsService(client: client, url: url)
+        let sut = ProductDetailService(client: client, url: url)
         return (sut, client)
     }
 }
