@@ -63,7 +63,7 @@ final class ProductDetailServiceTests: XCTestCase {
     }
     
     @MainActor
-    func test_load_deliverOn200HTTPResponse() async {
+    func test_load_deliversItemsOn200HTTPResponseWithJsonItems() async {
         let product1 = makeProduct(1, title: "string", price: 100, description: "string", category: "string", image: "http://example.com")
         let validJSON = makeProductDetailJson(product1.json)
         let (sut, _) = makeSUT(result: .success((validJSON, anyHttpResponse(statusCode: 200))))
