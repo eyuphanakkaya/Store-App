@@ -11,12 +11,10 @@ import Store_App
 @MainActor
 final class CategoryServiceAPIEndToEndTests: XCTestCase {
     func test_endToEndTestServerGetResult_matchesFixedTestAccountData() async {
-        let testServerURL = URL(string: "https://fakestoreapi.com/products/categories")!
-        let client = URLSessionHTTPClient()
-        let service = CategoryService(client: client, url: testServerURL)
+        let sut = makeSUT()
         
         do {
-            let result = try await service.load()
+            let result = try await sut.load()
             XCTAssertEqual(result.count, 4)
             XCTAssertEqual(result[0], expectedItem(at: 0))
             XCTAssertEqual(result[1], expectedItem(at: 1))
@@ -30,6 +28,14 @@ final class CategoryServiceAPIEndToEndTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func makeSUT() -> CategoryService  {
+        let testServerURL = URL(string: "https://fakestoreapi.com/products/categories")!
+        let client = URLSessionHTTPClient()
+        let service = CategoryService(client: client, url: testServerURL)
+        
+        return service
+    }
+    
     private func expectedItem(at index: Int) -> String {
         return name(at: index)
     }
