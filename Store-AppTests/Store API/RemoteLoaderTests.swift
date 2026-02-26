@@ -99,20 +99,11 @@ final class RemoteLoaderTests: XCTestCase {
     private func anySuccessfulResult() -> Result<(Data, HTTPURLResponse), Error> {
         .success((Data(), anyHttpResponse(statusCode: 200)))
     }
-    
-    private func makeCategory(_ name: String) -> (model: String, json: String) {
-        return (name, name)
-    }
-    
-    private func makeItemJson(_ items: [String]) -> Data {
-        try! JSONSerialization.data(withJSONObject: items)
-    }
-    
+
     private struct AnyError: Error {}
     
     private func anyError() -> Error {
         AnyError()
     }
-    
 
 }
