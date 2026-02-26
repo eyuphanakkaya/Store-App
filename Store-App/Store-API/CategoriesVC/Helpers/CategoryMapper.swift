@@ -13,7 +13,7 @@ public struct CategoryMapper {
     
     public static func map(data: Data, from response: HTTPURLResponse) throws -> [String] {
         guard response.statusCode == magic_num else {
-            throw CategoryService.CategoryServiceError.invalidData
+            throw RemoteLoader<[String]>.Error.invalidData
         }
         let decoder = JSONDecoder()
         let categories = try decoder.decode([String].self, from: data)
