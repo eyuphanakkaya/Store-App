@@ -11,9 +11,9 @@ import Foundation
 final public class RemoteLoader<T> {
     private let client: HTTPClient
     private let url: URL
-    private let mapper: (Data, URLResponse) throws -> T
+    private let mapper: (Data, HTTPURLResponse) throws -> T
     
-    public init(client: HTTPClient, url: URL, closure: @escaping (Data, URLResponse) throws -> T) {
+    public init(client: HTTPClient, url: URL, closure: @escaping (Data, HTTPURLResponse) throws -> T) {
         self.client = client
         self.url = url
         mapper = closure
