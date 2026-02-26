@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct CategoryMapper {
+public struct CategoryMapper {
     static var magic_num: Int { 200 }
+    
     
     public static func map(data: Data, from response: HTTPURLResponse) throws -> [String] {
         guard response.statusCode == magic_num else {
