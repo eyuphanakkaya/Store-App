@@ -8,23 +8,25 @@
 import Foundation
 
 
-final class RemoteLoader<T> {
+final public class RemoteLoader<T> {
     private let client: HTTPClient
     private let url: URL
     private let mapper: (Data, URLResponse) throws -> T
     
-    init(client: HTTPClient, url: URL, closure: @escaping (Data, URLResponse) throws -> T) {
+    public init(client: HTTPClient, url: URL, closure: @escaping (Data, URLResponse) throws -> T) {
         self.client = client
         self.url = url
         mapper = closure
     }
+    
+    public typealias Mapper = (Data, URLResponse) throws -> T
     
     public enum Error: Swift.Error {
         case connectivity
         case invalidData
     }
     
-    func load() async throws -> T {
+    public func load() async throws -> T {
         guard let (data, response) = try? await client.get(url) else {
             throw Error.connectivity
         }
