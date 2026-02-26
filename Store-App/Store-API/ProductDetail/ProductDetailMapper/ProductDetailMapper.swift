@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductDetailMapper {
+public struct ProductDetailMapper {
     public static func map(data: Data, from response: HTTPURLResponse) throws -> ProductResponse {
         guard response.statusCode == 200  else {
             throw RemoteLoader<ProductResponse>.Error.invalidData
