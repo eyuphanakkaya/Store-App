@@ -28,7 +28,7 @@ final class ProductDetailMapperTests: XCTestCase {
     }
     
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() async {
-        let invalidJSON = "invalid json".data(using: .utf8)!
+        let invalidJSON = makeInvalidJson()
         guard let result = try? ProductDetailMapper.map(data: invalidJSON, from: anyHttpResponse(statusCode: 200)) else {
             return
         }

@@ -9,23 +9,16 @@ import Foundation
 import Store_App
 
 
-func emptyListResponse() -> (Data, HTTPURLResponse) {
-    let emptyListJSON = "[]".data(using: .utf8)!
-    return (emptyListJSON, anyHttpResponse(statusCode: 200))
+func makeEmptyListJson() -> Data {
+    "[]".data(using: .utf8)!
 }
-
 func anyHttpResponse(statusCode: Int) -> HTTPURLResponse {
     let url = URL(string: "https://example.com")!
     return HTTPURLResponse(url:  url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
 }
 
-func anyValidResponse() -> (Data, HTTPURLResponse) {
-    return (Data(), anyHttpResponse(statusCode: 200))
-}
-
-func makeInvalidJsonResponse() -> (Data, HTTPURLResponse) {
-    let invalidJSON = "invalid json".data(using: .utf8)!
-    return (invalidJSON, anyHttpResponse(statusCode: 200))
+func makeInvalidJson() -> Data {
+    "invalid json".data(using: .utf8)!
 }
 
 func makeProduct(_ id: Int, title: String, price: Double, description: String, category: String, image: String)

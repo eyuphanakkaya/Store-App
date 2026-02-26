@@ -25,7 +25,7 @@ final class CategoryMapperTests: XCTestCase {
     }
     
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() async {
-        let invalidJSON = "invalid json".data(using: .utf8)!
+        let invalidJSON = makeInvalidJson()
         
         guard let result = try? CategoryMapper.map(data: invalidJSON, from: anyHttpResponse(statusCode: 200)) else {
             return
@@ -34,7 +34,7 @@ final class CategoryMapperTests: XCTestCase {
     }
     
     func test_load_deliversNoItemsOn200HTTPResponseWithEmptyJsonList() async {
-        let emptyListJSON = "[]".data(using: .utf8)!
+        let emptyListJSON = makeEmptyListJson()
 
         do {
             let result = try CategoryMapper.map(data: emptyListJSON, from: anyHttpResponse(statusCode: 200))

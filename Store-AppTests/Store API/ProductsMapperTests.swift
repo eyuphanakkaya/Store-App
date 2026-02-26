@@ -26,7 +26,7 @@ final class ProductsMapperTests: XCTestCase {
     }
     
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() async {
-        let invalidJSON = "invalid json".data(using: .utf8)!
+        let invalidJSON = makeInvalidJson()
 
         guard let result = try? ProductMapper.map(data: invalidJSON, from: anyHttpResponse(statusCode: 200)) else {
             return
@@ -35,7 +35,7 @@ final class ProductsMapperTests: XCTestCase {
     }
     
     func test_load_deliversOn200HTTPEmptyResponse() async {
-        let emptyListJSON = "[]".data(using: .utf8)!
+        let emptyListJSON = makeEmptyListJson()
         
         do {
             let result = try ProductMapper.map(data: emptyListJSON, from: anyHttpResponse(statusCode: 200))
