@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductMapper {
+public struct ProductMapper {
     public static func map(data: Data,from response: HTTPURLResponse) throws -> [ProductResponse] {
         guard response.statusCode == 200,
               let root = try? JSONDecoder().decode([RemoteProductResponse].self, from: data) else{
