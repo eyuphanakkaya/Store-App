@@ -12,11 +12,7 @@ import Store_App
 @MainActor
 final class ProductsMapperAPIEndToEndTests: XCTestCase {
     func test_endToEndTestServerGetResult_matchesFixedTestAccountData() async {
-        let url = URL(string: "https://fakestoreapi.com/products/category/men's clothing")!
-        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
-        let sut = RemoteLoader<[ProductResponse]>(client: client, url: url, closure: { data, response in
-            try ProductMapper.map(data: data, from: response)
-        })
+        let sut = makeSUT()
         
         do {
             let result = try await sut.load()
@@ -34,6 +30,16 @@ final class ProductsMapperAPIEndToEndTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    
+    private func makeSUT() -> RemoteLoader<[ProductResponse]> {
+        let url = URL(string: "https://fakestoreapi.com/products/category/men's clothing")!
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+        let sut = RemoteLoader<[ProductResponse]>(client: client, url: url, closure: { data, response in
+            try ProductMapper.map(data: data, from: response)
+        })
+        
+        return sut
+    }
     
     private func expectedItem(at index: Int) -> ProductResponse {
         return ProductResponse(id: id(at: index), title: title(at: index), price: price(at: index), description: description(at: index), category: category(at: index), image: image(at: index), isAdded: false)
