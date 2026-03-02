@@ -40,6 +40,7 @@
 		A44782172F1D038C00AEB93D /* Store-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Store-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A447822D2F1D038D00AEB93D /* Store-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Store-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A44782372F1D038D00AEB93D /* Store-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Store-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A49CDE362F55C57600119842 /* CITestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CITestPlan.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -120,6 +121,7 @@
 		A447820E2F1D038C00AEB93D = {
 			isa = PBXGroup;
 			children = (
+				A49CDE362F55C57600119842 /* CITestPlan.xctestplan */,
 				A44782192F1D038C00AEB93D /* Store-App */,
 				A44782302F1D038D00AEB93D /* Store-AppTests */,
 				A419A5F52F4F184100D12E2B /* StoreServicesAPIEndToEndTests */,
