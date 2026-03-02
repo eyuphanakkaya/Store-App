@@ -30,7 +30,7 @@ final class ProductDetailMapperAPIEndToEndTests: XCTestCase {
     
     private func makeSUT() -> RemoteLoader<ProductResponse> {
         let url = URL(string: "https://fakestoreapi.com/products/1")!
-        let client = URLSessionHTTPClient()
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
         let sut = RemoteLoader<ProductResponse>(client: client, url: url, closure: { data, response in
             try ProductDetailMapper.map(data: data, from: response)
         })

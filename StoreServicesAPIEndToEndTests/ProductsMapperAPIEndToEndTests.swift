@@ -13,7 +13,7 @@ import Store_App
 final class ProductsMapperAPIEndToEndTests: XCTestCase {
     func test_endToEndTestServerGetResult_matchesFixedTestAccountData() async {
         let url = URL(string: "https://fakestoreapi.com/products/category/men's clothing")!
-        let client = URLSessionHTTPClient()
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
         let sut = RemoteLoader<[ProductResponse]>(client: client, url: url, closure: { data, response in
             try ProductMapper.map(data: data, from: response)
         })

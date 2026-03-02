@@ -30,7 +30,7 @@ final class CategoryMapperAPIEndToEndTests: XCTestCase {
     // MARK: - Helpers
     private func makeSUT() -> RemoteLoader<[String]>  {
         let testServerURL = URL(string: "https://fakestoreapi.com/products/categories")!
-        let client = URLSessionHTTPClient()
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
         let service = RemoteLoader(client: client, url: testServerURL, closure: { data, response in
             try CategoryMapper.map(data: data, from: response)
         })
