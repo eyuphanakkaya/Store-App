@@ -47,7 +47,7 @@
 		A447823F2F1D038D00AEB93D /* Exceptions for "Store-App" folder in "Store-App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				App/Info.plist,
 			);
 			target = A44782162F1D038C00AEB93D /* Store-App */;
 		};
@@ -420,7 +420,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZYN3UXQ5C2;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Store-App/Info.plist";
+				INFOPLIST_FILE = "Store-App/App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -452,7 +452,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZYN3UXQ5C2;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Store-App/Info.plist";
+				INFOPLIST_FILE = "Store-App/App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
